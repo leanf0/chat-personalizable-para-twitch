@@ -1,0 +1,16 @@
+{
+  "name": "obs-chat",
+  "version": "1.0.0",
+  "description": "Custom OBS Twitch Chat Overlay",
+  "main": "server/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "tmi.js": "^1.8.5",
+    "ws": "^8.19.0"
+  }
+}
