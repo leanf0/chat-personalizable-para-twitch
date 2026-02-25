@@ -1,52 +1,116 @@
+/* ==============================
+   BASE CONFIGURATION
+   Cambia tipografía y fondo general
+============================== */
+
 body {
   margin: 0;
-  background: transparent;
-  font-family: Arial, sans-serif;
+  background: transparent; /* Cambiar si querés fondo sólido */
+  font-family: 'Inter', Arial, sans-serif; /* Cambiar fuente acá */
   overflow: hidden;
 }
+
+/* ==============================
+   CHAT CONTAINER
+   Controla posición y espaciado
+============================== */
 
 #chat-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-end; /* Cambiar a "flex-start" para que crezca hacia abajo */
+  gap: 12px; /* Espacio entre mensajes */
   height: 100vh;
-  padding: 1rem;
+  padding: 24px; /* Separación de bordes */
   box-sizing: border-box;
 }
 
+/* ==============================
+   MESSAGE CARD
+   Diseño principal de cada mensaje
+============================== */
+
 .message {
-  margin-bottom: 0.6rem;
-  padding: 0.6rem 1rem;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
-  animation: fadeIn 0.25s ease forwards;
-  word-wrap: break-word;
+  max-width: 100%;
+
+  padding: 14px 18px; /* Espacio interno */
+  border-radius: 18px; /* Bordes redondeados */
+
+  background: rgba(15, 15, 20, 0.75); /* Color fondo mensaje */
+  backdrop-filter: blur(12px); /* Efecto glass */
+  -webkit-backdrop-filter: blur(12px);
+
+  color: white; /* Color texto */
+  font-size: 18px; /* Tamaño del mensaje */
+  line-height: 1.4;
+
+  /* Sombras (podés quitarlas si querés estilo plano) */
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+  /* Animación de entrada */
+  transform: translateY(40px) scale(0.95);
+  opacity: 0;
+  animation: messageIn 0.4s cubic-bezier(.22,.9,.33,1) forwards;
+
+  word-break: break-word;
+  transition: transform 0.3s ease;
 }
+
+/* Hover opcional (podés eliminar si es solo overlay OBS) */
+.message:hover {
+  transform: scale(1.02);
+}
+
+/* ==============================
+   USERNAME
+   Personalización del nombre
+============================== */
 
 .username {
-  font-weight: bold;
+  font-weight: 700;
+  margin-right: 6px;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3); 
+  /* Cambiar sombra para glow personalizado */
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
+/* ==============================
+   ANIMACIÓN DE ENTRADA
+   Controla cómo aparecen mensajes
+============================== */
+
+@keyframes messageIn {
   to {
+    transform: translateY(0) scale(1);
     opacity: 1;
-    transform: translateY(0);
   }
 }
+
+/* ==============================
+   ANIMACIÓN DE SALIDA
+   Usada cuando JS agrega .fade-out
+============================== */
+
+.fade-out {
+  animation: messageOut 0.8s ease forwards;
+}
+
+@keyframes messageOut {
+  to {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+}
+
+/* ==============================
+   RESPONSIVE
+   Ajustes para pantallas pequeñas
+============================== */
 
 @media (max-width: 600px) {
   .message {
-    font-size: 14px;
-  }
-}
-
-@media (min-width: 601px) {
-  .message {
-    font-size: 18px;
+    font-size: 14px; /* Tamaño en móviles */
+    padding: 10px 14px;
   }
 }
