@@ -54,7 +54,7 @@ OBS-CHAT
 ## 1️⃣ Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/custom-obs-chat.git
+git clone https://github.com/leanf0/chat-personalizable-para-twitch
 cd custom-obs-chat
 npm install
 ```
