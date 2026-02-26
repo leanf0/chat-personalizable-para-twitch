@@ -12,8 +12,7 @@ minimal • realtime • twitch overlay
 
 A lightweight real-time Twitch chat overlay built with:
 
-- Node.js  
-- Express  
+- Node.js   
 - WebSocket  
 - tmi.js  
 
@@ -35,7 +34,7 @@ Clean architecture. No bloated dependencies. Fully customizable.
 
 ## 🗂 Structure
 
-OBS-CHAT
+```OBS-CHAT
 ├── public/
 │   ├── assets/
 │   ├── css/style.css
@@ -45,7 +44,7 @@ OBS-CHAT
 │   ├── config.js
 │   └── server.js
 ├── package.json
-
+```
 
 # 🚀 Setup
 
