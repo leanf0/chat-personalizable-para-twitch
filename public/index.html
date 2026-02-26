@@ -2,20 +2,38 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Custom OBS Chat</title>
 
-<!-- Google Font -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Custom OBS Chat</title> 
+
+<!-- =========================================================
+     🔧 ZONA EDITABLE – CAMBIAR FUENTE
+========================================================= -->
+
+<!-- 🔥 CAMBIAR ESTA LÍNEA para usar otra fuente de Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
-<!-- Main CSS -->
+<!-- 
+Ejemplo:
+Si querés usar Poppins, reemplazá por:
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+Luego también tenés que cambiar la fuente en style.css:
+font-family: 'Poppins', sans-serif;
+-->
+
 <link rel="stylesheet" href="css/style.css">
 
 </head>
-<body>
 
+<body class="theme-default">
+
+<!-- 🚫 NO TOCAR – Contenedor principal del chat -->
 <div id="chat-container"></div>
 
+<!-- 🚫 NO TOCAR – Script principal -->
 <script src="js/chat.js"></script>
+
 </body>
 </html>

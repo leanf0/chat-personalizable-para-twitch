@@ -8,6 +8,7 @@ body {
   background: transparent; /* Cambiar si querés fondo sólido */
   font-family: 'Inter', Arial, sans-serif; /* Cambiar fuente acá */
   overflow: hidden;
+  letter-spacing: 0.5px; /* Espaciado entre letras */
 }
 
 /* ==============================
@@ -19,48 +20,41 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end; /* Cambiar a "flex-start" para que crezca hacia abajo */
-  gap: 12px; /* Espacio entre mensajes */
+  gap: 8px; /* Espacio entre mensajes */
   height: 100vh;
-  padding: 24px; /* Separación de bordes */
+  padding: 20px; /* Separación de bordes */
   box-sizing: border-box;
 }
 
 /* ==============================
-   MESSAGE CARD
+   MESSAGE CARD (THEME DEFAULT)
    Diseño principal de cada mensaje
 ============================== */
 
-.message {
-  max-width: 100%;
+.theme-default .message {
+  display: inline-block;
+  width: fit-content;
+  max-width: 520px; /* Ancho máximo del mensaje */
 
-  padding: 14px 18px; /* Espacio interno */
-  border-radius: 18px; /* Bordes redondeados */
+  padding: 10px 14px; /* Espacio interno */
+  border-left: 3px solid #8f7fff; /* Línea lateral decorativa */
 
-  background: rgba(15, 15, 20, 0.75); /* Color fondo mensaje */
-  backdrop-filter: blur(12px); /* Efecto glass */
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(10, 10, 15, 0.75); /* Fondo mensaje */
+  backdrop-filter: blur(6px); /* Efecto glass */
 
-  color: white; /* Color texto */
-  font-size: 18px; /* Tamaño del mensaje */
-  line-height: 1.4;
+  color: #d8d2e6; /* Color texto */
+  font-size: 45px; /* 🔥 Cambiar tamaño del texto */
+  line-height: 1.3;
 
-  /* Sombras (podés quitarlas si querés estilo plano) */
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.35),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-
-  /* Animación de entrada */
-  transform: translateY(40px) scale(0.95);
-  opacity: 0;
-  animation: messageIn 0.4s cubic-bezier(.22,.9,.33,1) forwards;
+  text-shadow: 0 0 6px rgba(140, 120, 255, 0.25); /* Glow suave */
+  border-radius: 16px; /* Bordes redondeados */
 
   word-break: break-word;
-  transition: transform 0.3s ease;
-}
 
-/* Hover opcional (podés eliminar si es solo overlay OBS) */
-.message:hover {
-  transform: scale(1.02);
+  /* Animación de entrada */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: messageIn 0.35s ease forwards;
 }
 
 /* ==============================
@@ -69,21 +63,31 @@ body {
 ============================== */
 
 .username {
-  font-weight: 700;
+  font-weight: bold;
   margin-right: 6px;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3); 
-  /* Cambiar sombra para glow personalizado */
+  text-shadow: 0 0 8px currentColor;
+  /* El color del username viene desde Twitch automáticamente */
+}
+
+/* ==============================
+   EMOTES
+   Controla tamaño y alineación
+============================== */
+
+.emote {
+  height: 32px; /* 🔥 Cambiar tamaño de emotes */
+  vertical-align: middle;
+  transform: translateY(4px);
 }
 
 /* ==============================
    ANIMACIÓN DE ENTRADA
-   Controla cómo aparecen mensajes
 ============================== */
 
 @keyframes messageIn {
   to {
-    transform: translateY(0) scale(1);
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -93,13 +97,13 @@ body {
 ============================== */
 
 .fade-out {
-  animation: messageOut 0.8s ease forwards;
+  animation: messageOut 0.6s ease forwards;
 }
 
 @keyframes messageOut {
   to {
     opacity: 0;
-    transform: translateY(-10px) scale(0.95);
+    transform: translateY(-10px);
   }
 }
 
@@ -109,8 +113,8 @@ body {
 ============================== */
 
 @media (max-width: 600px) {
-  .message {
-    font-size: 14px; /* Tamaño en móviles */
-    padding: 10px 14px;
+  .theme-default .message {
+    font-size: 18px; /* Tamaño en móviles */
   }
 }
+

@@ -1,38 +1,18 @@
 /* ==============================
-   WEBSOCKET CONNECTION
-   Conecta el frontend con el servidor
+   CONFIGURACIÓN EDITABLE
+   Cambiá estos valores si querés personalizar el chat
+============================== */
+
+const MAX_MESSAGES = 40;        // Cantidad máxima de mensajes visibles
+const MESSAGE_DURATION = 30000; // Tiempo antes de desaparecer (30000 = 30s)
+const EMOTE_SIZE = "2.0";       // Cambiar a "3.0" para emotes más grandes
+
+/* ==============================
+   CONEXIÓN
 ============================== */
 
 const socket = new WebSocket(`ws://${window.location.host}`);
-
-/* ==============================
-   CHAT CONTAINER
-   Contenedor donde se insertan los mensajes
-============================== */
-
 const container = document.getElementById('chat-container');
-
-/* ==============================
-   CONNECTION EVENTS
-   Útil para debugging
-============================== */
-
-socket.onopen = () => {
-  console.log('🟢 Connected to WebSocket');
-};
-
-socket.onerror = (err) => {
-  console.error('WebSocket error:', err);
-};
-
-socket.onclose = () => {
-  console.warn('🔴 WebSocket disconnected');
-};
-
-/* ==============================
-   MESSAGE RECEIVED
-   Se ejecuta cada vez que llega un mensaje desde Twitch
-============================== */
 
 socket.onmessage = (event) => {
   const data = JSON.parse(event.data);
@@ -40,58 +20,102 @@ socket.onmessage = (event) => {
 };
 
 /* ==============================
-   ADD MESSAGE FUNCTION
-   Controla cómo se renderiza cada mensaje
+   SISTEMA DE EMOTES
+============================== */
+
+function getEmoteUrl(id, size = EMOTE_SIZE) {
+  return `https://static-cdn.jtvnw.net/emoticons/v2/${id}/default/dark/${size}`;
+}
+
+function renderMessageWithEmotes(container, text, emotes) {
+
+  container.appendChild(document.createTextNode(": "));
+
+  if (!emotes) {
+    container.appendChild(document.createTextNode(text));
+    return;
+  }
+
+  const emoteList = [];
+
+  for (const emoteId in emotes) {
+    emotes[emoteId].forEach(range => {
+      const [start, end] = range.split("-").map(Number);
+      emoteList.push({ start, end, id: emoteId });
+    });
+  }
+
+  emoteList.sort((a, b) => a.start - b.start);
+
+  let currentIndex = 0;
+
+  emoteList.forEach(emote => {
+
+    if (currentIndex < emote.start) {
+      container.appendChild(
+        document.createTextNode(text.slice(currentIndex, emote.start))
+      );
+    }
+
+    const img = document.createElement("img");
+    img.src = getEmoteUrl(emote.id);
+    img.classList.add("emote");
+    img.alt = "emote";
+
+    container.appendChild(img);
+
+    currentIndex = emote.end + 1;
+  });
+
+  if (currentIndex < text.length) {
+    container.appendChild(
+      document.createTextNode(text.slice(currentIndex))
+    );
+  }
+}
+
+
+
+/* ==============================
+   RENDER MENSAJES
 ============================== */
 
 function addMessage(data) {
 
-  // Crear contenedor principal del mensaje
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message');
 
-  // Crear nombre de usuario
+
+  /* ===== USERNAME ===== */
+
   const usernameSpan = document.createElement('span');
   usernameSpan.classList.add('username');
-  usernameSpan.style.color = data.color; // Cambiar si querés ignorar color Twitch
+
+  usernameSpan.style.color = data.color || "#ffffff";
   usernameSpan.textContent = data.user;
 
-  // Crear texto del mensaje
+  /* ===== MESSAGE TEXT ===== */
+
   const textSpan = document.createElement('span');
   textSpan.classList.add('text');
-  textSpan.textContent = `: ${data.text}`;
 
-  // Insertar elementos
+  renderMessageWithEmotes(textSpan, data.text, data.emotes);
+
   messageDiv.appendChild(usernameSpan);
   messageDiv.appendChild(textSpan);
   container.appendChild(messageDiv);
 
-  /* ==============================
-     MESSAGE LIMIT
-     Cambiar el número para más o menos mensajes visibles
-  ============================== */
 
-  const MAX_MESSAGES = 40;
-
+  /* LÍMITE DE MENSAJES */
   if (container.children.length > MAX_MESSAGES) {
     container.removeChild(container.firstChild);
   }
 
-  /* ==============================
-     AUTO REMOVE TIMER
-     Tiempo antes de desaparecer (milisegundos)
-     30000 = 30 segundos
-  ============================== */
-
-  const MESSAGE_DURATION = 30000;
-
+  /* AUTO ELIMINAR */
   setTimeout(() => {
     messageDiv.classList.add('fade-out');
-
-    // Tiempo que coincide con animación CSS
     setTimeout(() => {
       messageDiv.remove();
     }, 800);
-
   }, MESSAGE_DURATION);
 }

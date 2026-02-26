@@ -3,25 +3,14 @@
   "version": "1.0.0",
   "description": "Custom OBS Twitch Chat Overlay",
   "main": "server/server.js",
-  "bin": "server/server.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node server/server.js",
-    "build": "pkg ."
+    "start": "node server/server.js"
   },
   "dependencies": {
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "tmi.js": "^1.8.5",
     "ws": "^8.19.0"
-  },
-  "pkg": {
-    "assets": [
-      "public/**/*"
-    ],
-    "targets": [
-      "node18-win-x64"
-    ],
-    "outputPath": "dist"
   }
 }
