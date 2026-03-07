@@ -121,20 +121,4 @@ public/js/chat.js
 
 ```
 server/server.js
-```
 
----
-
-# 🧠 Roadmap
-
-- Smooth message animations  
-- Emote rendering  
-- EventSub WebSocket migration  
-- Advanced filtering  
-- Themed layouts  
-
----
-
-<div align="center">
-made with caffeine & insomnia ☕
-</div>
