@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🖤 custom-obs-chat
+# 🖤 Twitch chat overlay
 
 minimal • realtime • twitch overlay
 
